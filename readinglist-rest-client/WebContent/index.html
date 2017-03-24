@@ -121,11 +121,11 @@
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script>
+    
 	    $(document).ready(function() { 
 	        $.ajax({
 	            url: "http://localhost:8001"
 	        }).then(function(data) {
-	                
 	    		for(i=0; i<data.content.length; i++) { 
 		        	var main_article = "";
 		    		main_article += "<article class=\"main_article\">";
@@ -138,11 +138,8 @@
 		    		main_article += "	Review : <a href=\"review.html?book_id="+data.content[i][2].book_id+"\">"+data.content[i][1]+" ...</a>";
 		    		main_article += "	</p>";
 		    		main_article += "</article>";
-	
 		    		$('#main_section').append(main_article);
 	    		}
-	    		
-	    		
 	        });
 	    });
 
@@ -155,7 +152,7 @@
         </div>
         <nav id="main_gnb">
             <ul>
-            	<li><a href="http://localhost:8002/readinglist-rest-client/index.html">Home</a></li>
+            	<li><a href="http://localhost:8002">Home</a></li>
                 <li><a href="http://localhost:8000">Admin</a></li>
             </ul>
         </nav>

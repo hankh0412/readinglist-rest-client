@@ -122,33 +122,25 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script>
 	    $(document).ready(function() { 
-	    	
-	    	
 			var book_id="";
-
 	    	var url = unescape(location.href);
     	 	var book_id  = url.split('?')[1].split('=')[1];
-	    	
 	        $.ajax({
 	            url: "http://localhost:8001/"+book_id
 	        }).then(function(data) {
-	    		 
 	    		var main_article = "";
 		    		main_article += "<article class=\"main_article\">";
 		    		main_article += "	<h1>"+data[0].book.title+"</h1>";
 		    		main_article += "	<hr/>";
-	    		for(i=0; i<data.length; i++) { 
+	    		for(i=0; i<data.length; i++) {
 		    		main_article += "	<p>";
 		    		main_article += "	"+data[i].review+"  <i style=\"color:blue\">by "+data[i].reader.username+" - "+data[i].rating+"</i>";
 		    		main_article += "	</p>";
 	    		}
 	    		main_article += "</article>";
 	    		$('#main_section').append(main_article);
-	    		
-	    		
 	        });
 	    });
-	    
     </script>
 </head>
 <body>
@@ -158,7 +150,7 @@
         </div>
         <nav id="main_gnb">
             <ul>
-            	<li><a href="http://localhost:8002/readinglist-rest-client/index.html">Home</a></li>
+            	<li><a href="http://localhost:8002">Home</a></li>
                 <li><a href="http://localhost:8000">Admin</a></li>
             </ul>
         </nav>
