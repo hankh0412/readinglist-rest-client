@@ -120,11 +120,12 @@
         }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/js/properties.js"></script>
     <script>
     
 	    $(document).ready(function() { 
 	        $.ajax({
-	            url: "http://localhost:8001"
+	            url: rest_server_url
 	        }).then(function(data) {
 	    		for(i=0; i<data.content.length; i++) { 
 		        	var main_article = "";
@@ -141,6 +142,9 @@
 		    		$('#main_section').append(main_article);
 	    		}
 	        });
+	        
+	        $('#rest_client_url_a').attr('href',rest_client_url);
+	        $('#web_admin_url_a').attr('href',web_admin_url);
 	    });
 
     </script>
@@ -152,8 +156,8 @@
         </div>
         <nav id="main_gnb">
             <ul>
-            	<li><a href="http://localhost:8002">Home</a></li>
-                <li><a href="http://localhost:8000">Admin</a></li>
+            	<li><a id="rest_client_url_a">Home</a></li>
+                <li><a id="web_admin_url_a">Admin</a></li>
             </ul>
         </nav>
     </header>
