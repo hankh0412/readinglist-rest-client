@@ -135,7 +135,7 @@
 		    		main_article += "	<p>";
 		    		main_article += "	Title : <a href=\"https://ko.wikipedia.org/wiki/특수:책찾기?isbn="+data.content[i][2].isbn13+"\">"+data.content[i][2].title+"</a><br/>";
 		    		main_article += "	Author : "+data.content[i][2].author+"<br/>";
-		    		main_article += "	Rating : "+data.content[i][0]+"<br/>";
+		    		main_article += "	Rating : "+data.content[i][0].toFixed(2)+"<br/>";
 		    		main_article += "	Review : <a href=\"review.html?book_id="+data.content[i][2].book_id+"\">"+data.content[i][1].substring(0,50)+" ...</a>";
 		    		main_article += "	</p>";
 		    		main_article += "</article>";
