@@ -135,7 +135,7 @@
 		    		main_article += "	<hr/>";
 	    		for(i=0; i<data.length; i++) {
 		    		main_article += "	<p>";
-		    		main_article += "	"+data[i].review+"  <i style=\"color:blue\">by "+data[i].reader.username+" - "+data[i].rating+"</i>";
+		    		main_article += "	"+data[i].review.replace(/\r\n/g, '<br/>')+"  <i style=\"color:blue\">by "+data[i].reader.username+" - "+data[i].rating+"</i>";
 		    		main_article += "	</p>";
 	    		}
 	    		main_article += "</article>";
