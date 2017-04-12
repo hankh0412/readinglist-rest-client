@@ -131,13 +131,12 @@
 	    		for(i=0; i<data.content.length; i++) { 
 		        	var main_article = "";
 		    		main_article += "<article class=\"main_article\">";
-		    		main_article += "	<h1>No."+(i+1)+"</h1>";
+		    		main_article += "<h1><a href=\"https://ko.wikipedia.org/wiki/특수:책찾기?isbn="+data.content[i].book.isbn13+"\">No."+(i+1)+" "+data.content[i].book.title+"</a></h1>";
 		    		main_article += "	<hr/>";
 		    		main_article += "	<p>";
-		    		main_article += "	Title : <a href=\"https://ko.wikipedia.org/wiki/특수:책찾기?isbn="+data.content[i][2].isbn13+"\">"+data.content[i][2].title+"</a><br/>";
-		    		main_article += "	Author : "+data.content[i][2].author+"<br/>";
-		    		main_article += "	Rating : "+data.content[i][0].toFixed(2)+"<br/>";
-		    		main_article += "	Review : <a href=\"review.html?book_id="+data.content[i][2].book_id+"\">"+data.content[i][1].substring(0,50)+" ...</a>";
+		    		main_article += "	Author : "+data.content[i].book.author+"<br/>";
+		    		main_article += "	Rating : "+data.content[i].rating.toFixed(2)+"<br/>";
+		    		main_article += "	Review : <a href=\"review.html?book_id="+data.content[i].book.book_id+"\">"+data.content[i].review.substring(0,50)+" ...</a>";
 		    		main_article += "	</p>";
 		    		main_article += "</article>";
 		    		$('#main_section').append(main_article);
