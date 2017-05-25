@@ -80,6 +80,16 @@
         #main_section > article.main_article > div {
             margin:10px;
         }
+        #main_section > article.paging_article {
+            margin-bottom: 10px; padding-bottom: 10px;
+        }
+        #main_section > article.paging_article > p {
+            margin-bottom: 10px; padding-bottom: 10px; text-align: center;
+        }
+        
+        #main_section > article.paging_article > p span {
+            cursor: pointer;
+        }
     </style>
     <!-- 목록 -->
     <style>
@@ -120,32 +130,116 @@
             text-align: center;
         }
     </style>
+    <!-- paging -->
+    <style>
+		input.img_button_first {
+			vertical-align: middle;
+			background: url(images/pagination_first.png) no-repeat;
+			border: none;
+			width: 16px;
+			height: 19px;
+			cursor: pointer;
+		}
+		input.img_button_prev {
+			vertical-align: middle;
+			background: url(images/pagination_prev.png) no-repeat;
+			border: none;
+			width: 16px;
+			height: 19px;
+			cursor: pointer;
+		}
+		input.img_button_next {
+			vertical-align: middle;
+			background: url(images/pagination_next.png) no-repeat;
+			border: none;
+			width: 16px;
+			height: 19px;
+			cursor: pointer;
+		}
+		input.img_button_last {
+			vertical-align: middle;
+			background: url(images/pagination_last.png) no-repeat;
+			border: none;
+			width: 16px;
+			height: 19px;
+			cursor: pointer;
+		}
+    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="/js/properties.js"></script>
     <script>
     
 	    $(document).ready(function() { 
-	        $.ajax({
-	            url: rest_server_url
-	        }).then(function(data) {
-	    		for(i=0; i<data.content.length; i++) { 
-		        	var main_article = "";
-		    		main_article += "<article class=\"main_article\">";
-		    		main_article += "<h1><a href=\"https://ko.wikipedia.org/wiki/특수:책찾기?isbn="+data.content[i].book.isbn13+"\">No."+(i+1)+" "+data.content[i].book.title+"</a></h1>";
-		    		main_article += "	<hr/>";
-		    		main_article += "	<p>";
-		    		main_article += "	Author : "+data.content[i].book.author+"<br/>";
-		    		main_article += "	Rating : "+data.content[i].rating.toFixed(2)+"<br/>";
-		    		main_article += "	Review : <a href=\"review.html?book_id="+data.content[i].book.book_id+"\">"+data.content[i].review.substring(0,50)+" ...</a>";
-		    		main_article += "	</p>";
-		    		main_article += "</article>";
-		    		$('#main_section').append(main_article);
-	    		}
-	        });
+	        
+	    	draw_main_section(0);
 	        
 	        $('#rest_client_url_a').attr('href',rest_client_url);
 	        $('#web_admin_url_a').attr('href',web_admin_url);
 	    });
+	    
+	    
+	    function draw_main_section(current_page){
+	    	
+	    	$('#main_section').empty();
+	    	
+	    	var row_size = 10;
+	    	var paging_size = 5;
+	    	
+	    	$.ajax({
+	            url: rest_server_url+"/?size="+row_size+"&page="+current_page
+	        }).then(function(data) {
+	        	
+	    		for(i=0; i<data.content.length; i++) {
+		        	var main_article = "";
+		    		main_article += "<article class=\"main_article\">";
+		    		main_article += "	<h1><a href=\"https://ko.wikipedia.org/wiki/특수:책찾기?isbn="+data.content[i].book.isbn13+"\">No."+(current_page*row_size+i)+" "+data.content[i].book.title+"</a></h1>";
+		    		main_article += "	<hr/>";
+		    		main_article += "	<p>";
+		    		main_article += "		Author : "+data.content[i].book.author+"<br/>";
+		    		main_article += "		Rating : "+data.content[i].rating.toFixed(2)+"<br/>";
+		    		main_article += "		Review : <a href=\"review.html?book_id="+data.content[i].book.book_id+"\">"+data.content[i].review.substring(0,50)+" ...</a>";
+		    		main_article += "	</p>";
+		    		main_article += "</article>";
+		    		$('#main_section').append(main_article);
+	    		}
+	    		
+	    		if(data.totalElements == 0) return ;
+	    		
+	    		if(data.number > 0){
+		        	var prev_page = data.number -1;
+		        } else {
+		        	var prev_page = 0;
+		        }
+	    		var start_page = paging_size * Math.floor(current_page/paging_size);
+		        var end_page = row_size * Math.floor(current_page/paging_size) + paging_size;
+		        if(end_page > data.totalPages) end_page = data.totalPages;
+		        if(data.last){
+		        	var next_page = data.number;
+		        } else {
+		        	var next_page = data.number+1;
+		        }
+	    		
+	    		var paging_article = "";
+		        paging_article += "<article class=\"paging_article\">";
+		        paging_article += "    <p>";
+		        paging_article += "    	   <input type=\"button\" onclick=\"draw_main_section(0)\" class=\"img_button_first\">";
+		        paging_article += "    	   <input type=\"button\" onclick=\"draw_main_section("+prev_page+")\" class=\"img_button_prev\">";
+		        for(i=start_page; i<end_page; i++){
+		        	if(data.number == i){
+		        		paging_article += " <b>"+(i+1)+"</b> ";
+		        	}else{
+		        		paging_article += " <span onclick=\"draw_main_section("+i+")\">"+(i+1)+"</span> ";
+		        	}
+		        }
+		        paging_article += "    	   <input type=\"button\" onclick=\"draw_main_section("+next_page+")\" class=\"img_button_next\">";
+		        paging_article += "    	   <input type=\"button\" onclick=\"draw_main_section("+(data.totalPages-1)+")\" class=\"img_button_last\">";
+		        paging_article += "    </p>";
+		        paging_article += "</article>";
+		        $('#main_section').append(paging_article);
+		        
+	        });
+	    	
+	    }
 
     </script>
 </head>
