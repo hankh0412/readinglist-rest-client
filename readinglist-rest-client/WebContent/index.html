@@ -2,134 +2,134 @@
 <html>
 <head>
     <title>Book recommendations</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <!-- mobile 기기를 위한 bootstrap 설정 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="Stylesheet" href="css/bootstrap.min.css" />
-    <link href="css/base.css" rel="stylesheet" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="Stylesheet" href="css/bootstrap.min.css"/>
+    <link href="css/base.css" rel="stylesheet" type="text/css"/>
     <!-- 구 버전의 인터넷 익스플로러에서 HTML5 태그를 인식하게 합니다. -->
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-	<script src="js/properties.js"></script>
-	<script>
-    
-	    $(document).ready(function() { 
-	        
-	    	draw_main_section(0);
-	        
-	        $('#rest_client_url_a').attr('href',rest_client_url);
-	        $('#web_admin_url_a').attr('href',web_admin_url);
-	        $('#books_mgmt_url_a').attr('href',books_mgmt_url);
-	    });
-	    
-	    
-	    function draw_main_section(current_page){
-	    	$('#content').empty();
-	    	$('#paging_div').empty();
-	    	var row_size = 10;
-	    	var paging_size = 5;
-	    	$.ajax({
-	            url: rest_server_url+"/?size="+row_size+"&page="+current_page,
-	            error: function(request,status,error){
-	                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	            }
-	        }).then(function(data) {
-	    		for(i=0; i<data.content.length; i++) {
-		        	var main_article = "";
-		    	 	main_article += "<div class=\"article\">";
-		    		main_article += "	<a href=\"https://ko.wikipedia.org/wiki/특수:책찾기?isbn="+data.content[i].book.isbn13+"\"><h2>No."+(current_page*row_size+i)+" "+data.content[i].book.title+"</h2></a>";
-		    		main_article += "	<p>";
-		    		main_article += "		Author : "+data.content[i].book.author+"<br/>";
-		    		main_article += "		Rating : "+data.content[i].rating.toFixed(2)+"<br/>";
-		    		main_article += "		Review : <a href=\"review.html?book_id="+data.content[i].book.book_id+"\">"+data.content[i].review+"</a>";
-		    		main_article += "	</p>";
-		    		main_article += "</div>";
-		    		 
-		    		$('#content').append(main_article);
-	    		}
-	    		
-	    		if(data.totalElements == 0) return ;
-	    		
-	    		if(data.number > 0){
-		        	var prev_page = data.number -1;
-		        } else {
-		        	var prev_page = 0;
-		        }
-	    		var start_page = paging_size * Math.floor(current_page/paging_size);
-		        var end_page = row_size * Math.floor(current_page/paging_size) + paging_size;
-		        if(end_page > data.totalPages) end_page = data.totalPages;
-		        if(data.last){
-		        	var next_page = data.number;
-		        } else {
-		        	var next_page = data.number+1;
-		        }
-	    		
-	    		var paging_article = "";
-		        paging_article += "    <nav aria-label=\"...\">";
-				paging_article += "      <ul class=\"pagination\">";
-				paging_article += "        <li class=\"page-item\">";
-				paging_article += "          <a class=\"page-link\" href=\"#\" onclick=\"draw_main_section(0);return false;\"><<</a>";
-				paging_article += "        </li>";
-				paging_article += "        <li class=\"page-item\">";
-				paging_article += "          <a class=\"page-link\" href=\"#\" onclick=\"draw_main_section("+prev_page+");return false;\"><</a>";
-				paging_article += "        </li>";
-				for(i=start_page; i<end_page; i++){
-		        	if(data.number == i){
-						paging_article += "<li class=\"page-item active\">";
-						paging_article += "  <a class=\"page-link\" href=\"#\" onclick=\"return false;\" >"+(i+1)+" <span class=\"sr-only\">(current)</span></a>";
-						paging_article += "</li>";
-		        	} else {
-        				paging_article += "<li class=\"page-item\"><a class=\"page-link\" href=\"#\" onclick=\"draw_main_section("+i+");return false;\" >"+(i+1)+"</a></li>";
-		        	}
-	        	}
-				paging_article += "        <li class=\"page-item\">";
-				paging_article += "          <a class=\"page-link\" href=\"#\" onclick=\"draw_main_section("+next_page+");return false;\">></a>";
-				paging_article += "        </li>";
-				paging_article += "        <li class=\"page-item\">";
-				paging_article += "          <a class=\"page-link\" href=\"#\" onclick=\"draw_main_section("+(data.totalPages-1)+");return false;\">>></a>";
-				paging_article += "        </li>";
-				paging_article += "      </ul>";
-				paging_article += "    </nav>";
-		        $('#paging_div').append(paging_article);
-		        
-	        });
-	    	
-	    }
+    <script src="js/properties.js"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            draw_main_section(0);
+
+            $('#rest_client_url_a').attr('href', rest_client_url);
+            $('#web_admin_url_a').attr('href', web_admin_url);
+            $('#books_mgmt_url_a').attr('href', books_mgmt_url);
+        });
+
+
+        function draw_main_section(current_page) {
+            $('#content').empty();
+            $('#paging_div').empty();
+            var row_size = 10;
+            var paging_size = 5;
+            $.ajax({
+                url: rest_server_url + "/?size=" + row_size + "&page=" + current_page,
+                error: function (request, status, error) {
+                    alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                }
+            }).then(function (data) {
+                for (i = 0; i < data.content.length; i++) {
+                    var main_article = "";
+                    main_article += "<div class=\"article\">";
+                    main_article += "	<a href=\"https://ko.wikipedia.org/wiki/특수:책찾기?isbn=" + data.content[i].book.isbn13 + "\"><h2>No." + (current_page * row_size + i) + " " + data.content[i].book.title + "</h2></a>";
+                    main_article += "	<p>";
+                    main_article += "		Author : " + data.content[i].book.author + "<br/>";
+                    main_article += "		Rating : " + data.content[i].rating.toFixed(2) + "<br/>";
+                    main_article += "		Review : <a href=\"review.html?book_id=" + data.content[i].book.book_id + "\">" + data.content[i].review + "</a>";
+                    main_article += "	</p>";
+                    main_article += "</div>";
+
+                    $('#content').append(main_article);
+                }
+
+                if (data.totalElements == 0) return;
+
+                if (data.number > 0) {
+                    var prev_page = data.number - 1;
+                } else {
+                    var prev_page = 0;
+                }
+                var start_page = paging_size * Math.floor(current_page / paging_size);
+                var end_page = row_size * Math.floor(current_page / paging_size) + paging_size;
+                if (end_page > data.totalPages) end_page = data.totalPages;
+                if (data.last) {
+                    var next_page = data.number;
+                } else {
+                    var next_page = data.number + 1;
+                }
+
+                var paging_article = "";
+                paging_article += "    <nav aria-label=\"...\">";
+                paging_article += "      <ul class=\"pagination\">";
+                paging_article += "        <li class=\"page-item\">";
+                paging_article += "          <a class=\"page-link\" href=\"#\" onclick=\"draw_main_section(0);return false;\"><<</a>";
+                paging_article += "        </li>";
+                paging_article += "        <li class=\"page-item\">";
+                paging_article += "          <a class=\"page-link\" href=\"#\" onclick=\"draw_main_section(" + prev_page + ");return false;\"><</a>";
+                paging_article += "        </li>";
+                for (i = start_page; i < end_page; i++) {
+                    if (data.number == i) {
+                        paging_article += "<li class=\"page-item active\">";
+                        paging_article += "  <a class=\"page-link\" href=\"#\" onclick=\"return false;\" >" + (i + 1) + " <span class=\"sr-only\">(current)</span></a>";
+                        paging_article += "</li>";
+                    } else {
+                        paging_article += "<li class=\"page-item\"><a class=\"page-link\" href=\"#\" onclick=\"draw_main_section(" + i + ");return false;\" >" + (i + 1) + "</a></li>";
+                    }
+                }
+                paging_article += "        <li class=\"page-item\">";
+                paging_article += "          <a class=\"page-link\" href=\"#\" onclick=\"draw_main_section(" + next_page + ");return false;\">></a>";
+                paging_article += "        </li>";
+                paging_article += "        <li class=\"page-item\">";
+                paging_article += "          <a class=\"page-link\" href=\"#\" onclick=\"draw_main_section(" + (data.totalPages - 1) + ");return false;\">>></a>";
+                paging_article += "        </li>";
+                paging_article += "      </ul>";
+                paging_article += "    </nav>";
+                $('#paging_div').append(paging_article);
+
+            });
+
+        }
 
     </script>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#" id="rest_client_url_a">Book recommendations</a>
-            <div class="navbar-header">
-                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#target">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div class="collapse navbar-collapse" id="target">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#" id="books_mgmt_url_a">Books Management</a></li>
-                    <li><a href="#" id="web_admin_url_a">Write a review</a></li>
-                </ul>
-            </div>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#" id="rest_client_url_a">Book recommendations</a>
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#target">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="target">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" id="books_mgmt_url_a">Books Management</a></li>
+                <li><a href="#" id="web_admin_url_a">Write a review</a></li>
+            </ul>
         </div>
     </div>
-    <div id="content" class="container">
+</div>
+<div id="content" class="container">
+</div>
+<div id="paging_div" style="text-align: center;">
+</div>
+<footer class="footer">
+    <div class="container text-center">
+        <h3><span class="text-muted">A book that is shut is but a block.</span></h3>
+        <span class="text-muted">- Thomas Fuller -</span>
     </div>
-    <div id="paging_div" style="text-align: center;">
-	</div>
-	<footer class="footer">
-      <div class="container text-center">
-      	<h3><span class="text-muted">A book that is shut is but a block.</span></h3>
-      	<span class="text-muted">- Thomas Fuller -</span>
-      </div>
-    </footer>
+</footer>
 </body>
 </html>

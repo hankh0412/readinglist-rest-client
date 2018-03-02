@@ -4,9 +4,9 @@
     <title>Book recommendations</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <!-- mobile 기기를 위한 bootstrap 설정 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="Stylesheet" href="css/bootstrap.min.css" />
-    <link href="css/base.css" rel="stylesheet" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="Stylesheet" href="css/bootstrap.min.css"/>
+    <link href="css/base.css" rel="stylesheet" type="text/css"/>
     <!-- 구 버전의 인터넷 익스플로러에서 HTML5 태그를 인식하게 합니다. -->
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -15,58 +15,58 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/properties.js"></script>
     <script>
-	    $(document).ready(function() { 
-			var book_id="";
-	    	var url = unescape(location.href);
-    	 	var book_id  = url.split('?')[1].split('=')[1];
-	        $.ajax({
-	            url: rest_server_url+"/"+book_id
-	        }).then(function(data) {
-	        	var main_article = "";
-	    	 	    main_article += "<div class=\"article\">";
-	    		    main_article += "	<h2>"+data[0].book.title+"</h2>";
-	    		for(i=0; i<data.length; i++) {
-	    			main_article += "	<p>";
-		    		main_article += "	"+data[i].review.replace(/\r\n/g, '<br/>')+"  <i style=\"color:blue\">by "+data[i].reader.username+" - "+data[i].rating+"</i>";
-		    		main_article += "	</p>";
-	    		}
-	    		    main_article += "</div>";
-	    		$('#content').append(main_article);
-	        });
-	        
-	        $('#rest_client_url_a').attr('href',rest_client_url);
-	        $('#web_admin_url_a').attr('href',web_admin_url);
-	        $('#books_mgmt_url_a').attr('href',books_mgmt_url);
-	    });
+        $(document).ready(function () {
+            var book_id = "";
+            var url = unescape(location.href);
+            var book_id = url.split('?')[1].split('=')[1];
+            $.ajax({
+                url: rest_server_url + "/" + book_id
+            }).then(function (data) {
+                var main_article = "";
+                main_article += "<div class=\"article\">";
+                main_article += "	<h2>" + data[0].book.title + "</h2>";
+                for (i = 0; i < data.length; i++) {
+                    main_article += "	<p>";
+                    main_article += "	" + data[i].review.replace(/\r\n/g, '<br/>') + "  <i style=\"color:blue\">by " + data[i].reader.username + " - " + data[i].rating + "</i>";
+                    main_article += "	</p>";
+                }
+                main_article += "</div>";
+                $('#content').append(main_article);
+            });
+
+            $('#rest_client_url_a').attr('href', rest_client_url);
+            $('#web_admin_url_a').attr('href', web_admin_url);
+            $('#books_mgmt_url_a').attr('href', books_mgmt_url);
+        });
     </script>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#" id="rest_client_url_a">Book recommendations</a>
-            <div class="navbar-header">
-                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#target">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div class="collapse navbar-collapse" id="target">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#" id="books_mgmt_url_a">Books Management</a></li>
-                    <li><a href="#" id="web_admin_url_a">Write a review</a></li>
-                </ul>
-            </div>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#" id="rest_client_url_a">Book recommendations</a>
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#target">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="target">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" id="books_mgmt_url_a">Books Management</a></li>
+                <li><a href="#" id="web_admin_url_a">Write a review</a></li>
+            </ul>
         </div>
     </div>
-    <div id="content" class="container">
+</div>
+<div id="content" class="container">
+</div>
+<footer class="footer">
+    <div class="container text-center">
+        <h3><span class="text-muted">A book that is shut is but a block.</span></h3>
+        <span class="text-muted">- Thomas Fuller -</span>
     </div>
-    <footer class="footer">
-      <div class="container text-center">
-      	<h3><span class="text-muted">A book that is shut is but a block.</span></h3>
-      	<span class="text-muted">- Thomas Fuller -</span>
-      </div>
-    </footer>
+</footer>
 </body>
 </html>
