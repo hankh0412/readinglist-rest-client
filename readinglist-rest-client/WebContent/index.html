@@ -32,7 +32,7 @@
             var row_size = 10;
             var paging_size = 5;
             $.ajax({
-                url: rest_server_url + "/?size=" + row_size + "&page=" + current_page,
+                url: rest_server_url + "/books/?size=" + row_size + "&page=" + current_page,
                 error: function (request, status, error) {
                     alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
                 }

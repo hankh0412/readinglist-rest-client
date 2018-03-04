@@ -20,7 +20,7 @@
             var url = unescape(location.href);
             var book_id = url.split('?')[1].split('=')[1];
             $.ajax({
-                url: rest_server_url + "/" + book_id
+                url: rest_server_url + "/books/" + book_id
             }).then(function (data) {
                 var main_article = "";
                 main_article += "<div class=\"article\">";
